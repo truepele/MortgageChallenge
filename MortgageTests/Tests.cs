@@ -1,4 +1,5 @@
 ﻿using Mortgage;
+using Mortgage.Builder;
 using Mortgage.MortgageProcessors;
 using Xunit;
 
@@ -9,8 +10,8 @@ namespace MortgageTests
         private IMortgageProcessor BuildDefaultProcessor(double minimumDownpayment, double maxPropertyValue)
         {
             return new MortgageProcessorBuilder(new MortgageTypeMortgageProcessor())
-                .Add(new MinimumDownpaymentMortgageProcessor(minimumDownpayment))
-                .Add(new MaxPropertyValueMortgageProcessor(maxPropertyValue))
+                .And(new MinimumDownpaymentMortgageProcessor(minimumDownpayment))
+                .And(new MaxPropertyValueMortgageProcessor(maxPropertyValue))
                 .Build();
         }
 
@@ -48,7 +49,7 @@ namespace MortgageTests
             // Assert
             Assert.Equal(MortgageApplicationResult.Declined, actualResult);
         }
-        
+
         [Fact]
         public void FixedMortgageForFivePercentDownpaymentAndOverMillionDollarsValueApproved()
         {
